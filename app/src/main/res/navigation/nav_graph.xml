@@ -8,10 +8,10 @@
     <fragment
         android:id="@+id/FirstFragment"
         android:name="com.example.myassignmentgithub.SearchUsersFragment"
-        android:label="@string/first_fragment_label"
+        android:label="@string/fragment_label_user_list"
         tools:layout="@layout/fragment_search_user">
-
-        <action
+    </fragment>
+<!--        <action
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment" />
     </fragment>
@@ -24,5 +24,5 @@
         <action
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment" />
-    </fragment>
+    </fragment>-->
 </navigation>

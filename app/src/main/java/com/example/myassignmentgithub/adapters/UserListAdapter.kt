@@ -1,12 +1,18 @@
 package com.example.myassignmentgithub.adapters
 
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myassignmentgithub.R
-import com.example.myassignmentgithub.network.model.UserShortInfo
+import com.example.myassignmentgithub.databinding.ListItemUserBinding
+import com.example.myassignmentgithub.model.UserShortInfo
+
 
 class UserListAdapter :
     RecyclerView.Adapter<UserListAdapter.ViewHolder>() {
@@ -22,8 +28,8 @@ class UserListAdapter :
         val user = items[position]
         val view = holder.itemView
 //        view.setOnClickListener { onItemClick(user.serverId) }
-//        view.login_text_view.text = user.login
-        Glide.with(view.context).load(user.avatarUrl).into(view.avatar_image_view)
+        view.findViewById<TextView>(R.id.login_text_view).text = user.login
+        Glide.with(view.context).load(user.avatarUrl).into(view.findViewById<ImageView>(R.id.avatar_image_view))
     }
 
     override fun getItemCount(): Int = items.size

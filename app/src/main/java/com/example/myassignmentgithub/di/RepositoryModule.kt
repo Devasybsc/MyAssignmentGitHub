@@ -1,8 +1,8 @@
 package com.example.myassignmentgithub.di
 
-import com.example.myassignmentgithub.network.GitHubUsersApi
-import com.example.myassignmentgithub.repositories.GitHubUserRepository
-import com.example.myassignmentgithub.repository.UserRepository
+import com.example.myassignmentgithub.datasource.RemoteUserDatasource
+import com.example.myassignmentgithub.repositories.UserRepository
+import com.example.myassignmentgithub.repositories.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -12,7 +12,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(usersApi: GitHubUsersApi): UserRepository {
-        return GitHubUserRepository(usersApi)
+    fun provideUserRepository(remoteUserDatasource: RemoteUserDatasource): UserRepository {
+        return UserRepositoryImpl(remoteUserDatasource)
     }
 }

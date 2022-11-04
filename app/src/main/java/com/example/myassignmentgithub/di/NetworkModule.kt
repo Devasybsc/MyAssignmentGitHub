@@ -2,13 +2,13 @@ package com.example.myassignmentgithub.di
 
 import com.example.myassignmentgithub.network.GITHUB_BASE_URL
 import com.example.myassignmentgithub.network.GitHubUsersApi
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -22,19 +22,18 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(moshi: Moshi): Retrofit {
-        return Retrofit.Builder()
-                .baseUrl(GITHUB_BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .build()
-    }
+    fun provideRetrofit(): Retrofit {
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+        val httpClient = OkHttpClient.Builder()
+        httpClient.addInterceptor(logging)
 
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi {
-        return Moshi.Builder()
-                .add(KotlinJsonAdapterFactory())
-                .build()
+        val gson = GsonBuilder().create()
+        return Retrofit.Builder()
+            .baseUrl(GITHUB_BASE_URL)
+            .client(httpClient.build())
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
     }
 }

@@ -7,4 +7,5 @@
     <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_minimum">2dp</dimen>
     <dimen name="text_size_medium">16sp</dimen>
+    <dimen name="text_size_large">26sp</dimen>
 </resources>

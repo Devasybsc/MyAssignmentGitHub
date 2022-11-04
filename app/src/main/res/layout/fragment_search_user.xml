@@ -22,7 +22,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recycler_users"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
@@ -48,19 +48,23 @@
             android:layout_marginEnd="@dimen/margin_large"
             android:text="@string/missing_network_connection"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/text_size_medium"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_large"
+            app:layout_constraintBottom_toTopOf="@+id/bt_Retry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bt_Retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/retry"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_errorDescription"/>
 
