@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="listener"
+            type="com.example.myassignmentgithub.ui.listeners.SearchUsersListener" />
+
+        <variable
+            name="viewModel"
+            type="com.example.myassignmentgithub.viewmodels.SearchUserListViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -26,10 +35,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
+            app:itemViewModels="@{viewModel.data}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"/>
+            app:layout_constraintTop_toBottomOf="@+id/searchView" />
 
         <ProgressBar
             android:id="@+id/loading_bar"
@@ -46,27 +56,28 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_large"
+            android:gravity="center"
             android:text="@string/missing_network_connection"
             android:textColor="@color/colorPrimary"
-            android:gravity="center"
             android:textSize="@dimen/text_size_large"
             app:layout_constraintBottom_toTopOf="@+id/bt_Retry"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"/>
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/bt_Retry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/margin_medium"
             android:layout_marginTop="@dimen/margin_large"
+            android:padding="@dimen/margin_medium"
+            android:text="@string/retry"
+            android:onClick="@{() ->listener.retryClicked()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/retry"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_errorDescription"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_errorDescription" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_errorWidget"

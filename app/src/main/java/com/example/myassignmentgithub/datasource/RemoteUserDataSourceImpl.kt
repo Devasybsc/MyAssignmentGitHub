@@ -29,8 +29,8 @@ class RemoteUserDataSourceImpl @Inject constructor(
                 throw ApiUnsuccessfulException()
             }
             return response.body() ?: throw ApiUnsuccessfulException()
-        } catch (ioException: IOException) {
-            throw ApiNetworkException(ioException)
+        } catch (exception: Exception) {
+            throw ApiNetworkException(exception)
         }
     }
 }

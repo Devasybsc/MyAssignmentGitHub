@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myassignmentgithub.adapters.UserListAdapter
 import com.example.myassignmentgithub.databinding.FragmentSearchUserBinding
 import com.example.myassignmentgithub.model.UserShortInfo
 import com.example.myassignmentgithub.ui.ScreenState
+import com.example.myassignmentgithub.ui.listeners.SearchUsersListener
 import com.example.myassignmentgithub.viewmodels.SearchUserListViewModel
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
@@ -20,14 +18,13 @@ import javax.inject.Inject
 /**
  * Fragment to search users.
  */
-class SearchUsersFragment : DaggerFragment(), OnNavigateToUserDetailsListener {
+class SearchUsersFragment : DaggerFragment(), OnNavigateToUserDetailsListener, SearchUsersListener {
 
     private var _binding: FragmentSearchUserBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val userListAdapter = UserListAdapter()
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -39,18 +36,10 @@ class SearchUsersFragment : DaggerFragment(), OnNavigateToUserDetailsListener {
     ): View {
         _binding = FragmentSearchUserBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this
-        binding.recyclerUsers.apply {
-            val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            layoutManager.isSmoothScrollbarEnabled = true
-            this.layoutManager = layoutManager
-            this.adapter = userListAdapter
-        }
-
+        binding.listener = this
         viewModel.searchUser(null)
-        viewModel.userList.observe(viewLifecycleOwner) {
-            userListAdapter.setItems(it)
-        }
-        viewModel.screenState.observe(viewLifecycleOwner, Observer { onStateChanged(it) })
+        binding.viewModel = viewModel
+        viewModel.screenState.observe(viewLifecycleOwner) { onStateChanged(it) }
         return binding.root
     }
 
@@ -95,6 +84,10 @@ class SearchUsersFragment : DaggerFragment(), OnNavigateToUserDetailsListener {
 
     override fun onNavigateToUserDetails(userShortInfo: UserShortInfo) {
 //        viewModel.navigateToUserDetails(userShortInfo)
+    }
+
+    override fun retryClicked() {
+        viewModel.searchUser(binding.searchView.query.toString())
     }
 }
 
