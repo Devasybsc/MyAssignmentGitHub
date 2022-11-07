@@ -1,18 +1,28 @@
 package com.example.myassignmentgithub.di
 
-import com.example.myassignmentgithub.MainActivity
-import com.example.myassignmentgithub.SearchUsersFragment
+import android.app.Application
+import android.content.Context
+import android.content.res.Resources
+import com.example.myassignmentgithub.datasource.PreferenceProvider
 import dagger.Module
-import dagger.android.ContributesAndroidInjector
+import dagger.Provides
+import javax.inject.Singleton
 
 @Suppress("unused")
 @Module
-abstract class AppModule {
+class AppModule(
+    @get:Provides
+    val application: Application
+) {
+    @Provides
+    fun provideContext(application: Application): Context = application
 
-    @ContributesAndroidInjector
-    abstract fun bindMainActivity(): MainActivity
+    @Provides
+    fun provideResources(application: Application): Resources = application.resources
 
-    @ContributesAndroidInjector
-    abstract fun bindSearchUsersFragment(): SearchUsersFragment
-
+    @Provides
+    @Singleton
+    fun providePreferenceProvider(application: Application): PreferenceProvider {
+        return PreferenceProvider(application)
+    }
 }

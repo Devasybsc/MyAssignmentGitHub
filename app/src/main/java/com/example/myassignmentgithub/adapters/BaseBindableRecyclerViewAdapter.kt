@@ -5,10 +5,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myassignmentgithub.databinding.BindableItemViewModel
 import com.example.myassignmentgithub.BR
+import com.example.myassignmentgithub.databinding.BindableItemViewModel
 
-class BaseBindableRecyclerViewAdapter : RecyclerView.Adapter<BaseBindableViewHolder>() {
+class BaseBindableRecyclerViewAdapter(val listener: OnItemClickListener) :
+    RecyclerView.Adapter<BaseBindableViewHolder>() {
 
     var itemViewModels: List<BindableItemViewModel> = emptyList()
     private val viewTypeToLayoutId: MutableMap<Int, Int> = mutableMapOf()
@@ -34,7 +35,7 @@ class BaseBindableRecyclerViewAdapter : RecyclerView.Adapter<BaseBindableViewHol
     override fun getItemCount(): Int = itemViewModels.size
 
     override fun onBindViewHolder(holder: BaseBindableViewHolder, position: Int) {
-        holder.bind(itemViewModels[position])
+        holder.bind(itemViewModels[position], listener)
     }
 
     fun updateItems(items: List<BindableItemViewModel>?) {
@@ -46,7 +47,8 @@ class BaseBindableRecyclerViewAdapter : RecyclerView.Adapter<BaseBindableViewHol
 class BaseBindableViewHolder(private val binding: ViewDataBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(itemViewModel: BindableItemViewModel) {
+    fun bind(itemViewModel: BindableItemViewModel, listener: OnItemClickListener) {
         binding.setVariable(BR.searchUserViewModel, itemViewModel)
+        binding.setVariable(BR.listener, listener)
     }
 }

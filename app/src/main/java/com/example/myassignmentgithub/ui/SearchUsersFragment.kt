@@ -1,4 +1,4 @@
-package com.example.myassignmentgithub
+package com.example.myassignmentgithub.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.example.myassignmentgithub.R
 import com.example.myassignmentgithub.databinding.FragmentSearchUserBinding
 import com.example.myassignmentgithub.model.UserShortInfo
-import com.example.myassignmentgithub.ui.ScreenState
 import com.example.myassignmentgithub.ui.listeners.SearchUsersListener
 import com.example.myassignmentgithub.viewmodels.SearchUserListViewModel
 import dagger.android.support.DaggerFragment
@@ -88,6 +88,15 @@ class SearchUsersFragment : DaggerFragment(), OnNavigateToUserDetailsListener, S
 
     override fun retryClicked() {
         viewModel.searchUser(binding.searchView.query.toString())
+    }
+
+    override fun setFavoriteUser(user: UserShortInfo) {
+        viewModel.setFavoriteUser(user)
+    }
+
+    override fun onStop() {
+        viewModel.onDestroy()
+        super.onStop()
     }
 }
 

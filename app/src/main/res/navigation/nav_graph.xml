@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.myassignmentgithub.SearchUsersFragment"
+        android:name="com.example.myassignmentgithub.ui.SearchUsersFragment"
         android:label="@string/fragment_label_user_list"
         tools:layout="@layout/fragment_search_user">
     </fragment>

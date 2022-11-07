@@ -1,0 +1,3 @@
+package com.example.myassignmentgithub.adapters
+
+interface OnItemClickListener

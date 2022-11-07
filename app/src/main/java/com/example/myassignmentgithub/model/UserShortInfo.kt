@@ -1,5 +1,6 @@
 package com.example.myassignmentgithub.model
 
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.annotations.SerializedName
 
 data class UserShortInfo(
@@ -16,5 +17,13 @@ data class UserShortInfo(
 
     @SerializedName("html_url")
     var htmlUrl: String? = null
-)
+) {
+    var isFavorite: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
 
+    fun setFavorite(favorite: Boolean) {
+        if(this.isFavorite == null){
+            this.isFavorite = MutableLiveData<Boolean>(false)
+        }
+        this.isFavorite.postValue(favorite)
+    }
+}
